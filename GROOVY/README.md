@@ -12,7 +12,7 @@
   * TestStep
   
 ## UISupport
-  * PopUp-ComboBox
+  * ComboBox
   * Alert
   
     
