@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="9365b736-09d3-4eff-baea-2eaaeb86c378" activeEnvironment="Default" name="GROOVY" resourceRoot="" soapui-version="5.2.1" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:RestService" id="27ac794c-e866-4407-9c19-a65e83a49acd" wadlVersion="http://wadl.dev.java.net/2009/02" name="https://jsonplaceholder.typicode.com" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache/><con:endpoints><con:endpoint>https://jsonplaceholder.typicode.com</con:endpoint></con:endpoints><con:resource name="1" path="/posts/1" id="0fd30962-3a9b-42a6-ba21-99422cbc7716"><con:settings/><con:parameters/><con:method name="1" id="20525669-16da-4c27-8b5d-537ae18c8825" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:ns="https://jsonplaceholder.typicode.com/posts/1">ns:Response</con:element></con:representation><con:representation type="FAULT"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>404</con:status><con:params/><con:element>Fault</con:element></con:representation><con:request name="Request 1" id="b110db4f-8d53-4f00-a497-cd62ff6cdebc" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://jsonplaceholder.typicode.com</con:endpoint><con:request/><con:originalUri>https://jsonplaceholder.typicode.com/posts/1</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource></con:interface><con:testSuite id="da0fda9d-e0a7-4ee2-a9bd-fbc8409bd578" name="Groovy"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="521203e6-db00-4655-928f-e75e1b62bae6" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="File - CreateLoadPropeties" searchProperties="true"><con:settings/><con:testStep type="groovy" name="CreateFile" id="11074612-07a0-443d-b3d6-4f4eaada5dab"><con:settings/><con:config><script>//Create the properties object, and load it from the file system:
+//https://bowerstudios.com/node/1066
+Properties props = new Properties()
+File propsFile = new File('test.properties')
+Integer rand = new Random().next(4)
+props.setProperty('porcupine', rand.toString())
+props.store(propsFile.newWriter(), null)</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="20d8695b-2d3f-4138-84ae-ba7fe2757874" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="File - LoadFilePropeties" searchProperties="true"><con:settings/><con:testStep type="groovy" name="LoadFileProperty" id="1837859f-8973-4bac-bf45-1c2fbb9222f9"><con:settings/><con:config><script>Properties properties = new Properties()
+File propertiesFile = new File('test.properties')
+propertiesFile.withInputStream {
+    properties.load(it)
+}
+
+def runtimeString = 'porcupine'
+log.info(properties.getProperty('porcupine'))
+assert properties."$runtimeString" == properties.getProperty('porcupine')
+</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="d9c23d34-280d-4bd8-b8bf-5fe9c3aba176" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="File - DeleteFilePropeties" searchProperties="true"><con:settings/><con:testStep type="groovy" name="CreateFile" id="850430bf-52d1-4819-ac96-b3d58a140c83"><con:settings/><con:config><script>//Create the properties object, and load it from the file system:
+//https://bowerstudios.com/node/1066
+Properties props = new Properties()
+File propsFile = new File('test.properties')
+Integer rand = new Random().next(4)
+props.setProperty('deletethis', rand.toString())
+props.store(propsFile.newWriter(), null)
+ sleep(2000);</script></con:config></con:testStep><con:testStep type="groovy" name="DeleteProperty" id="3b75620d-9116-47d8-8662-a7d82af707e3"><con:settings/><con:config><script>        try {
+            File myFile = new File("test.properties");
+            Properties properties = new Properties();
+            log.info("Load File");
+            properties.load(new FileInputStream(myFile));
+            log.info("Value deletethis:"+properties.getProperty("deletethis"));
+            properties.remove("deletethis");
+            OutputStream out = new FileOutputStream(myFile);
+            properties.store(out, null);
+            log.info("Value deletethis:"+properties.getProperty("deletethis"));
+             sleep(5000);
+        } catch (Exception e) {
+            log.info(e.printStackTrace());
+        }</script></con:config></con:testStep><con:testStep type="groovy" name="RemoveFile" id="94a22a54-3184-4eb3-ab0b-3f3d6f9dbafc"><con:settings/><con:config><script> File myFile = new File("test.properties");
+ sleep(5000);
+ assert myFile.delete();</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="c142c081-4258-47b3-b2d9-abe4e5e1d59b" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestSuite" searchProperties="true"><con:settings/><con:testStep type="groovy" name="GetProperties" id="dc3a73d1-c797-4b2d-a950-bc814d842b17"><con:settings/><con:config><script>
+//Test Suite Level Properties:
+def name = testRunner.testCase.testSuite.name;
+log.info("testRunner.testCase.testSuite.name:"+name);
+
+def testSuiteName = testRunner.testCase.testSuite.name;
+log.info "Test Suite Properties [testRunner.testCase.testSuite.name]:\n$testSuiteName";
+def testSuiteProperties = testRunner.testCase.testSuite.properties;
+log.info "Test Suite Properties [testRunner.testCase.testSuite.properties]:\n$testSuiteProperties";
+def testSuitePropertiesName = testRunner.testCase.testSuite.getPropertyNames();
+log.info "Test Suite PropertiesName [testRunner.testCase.testSuite.getPropertyNames(]:\n$testSuitePropertiesName";
+
+</script></con:config></con:testStep><con:testStep type="groovy" name="TestSuiteList" id="4f97eaad-b3ae-43d3-ae20-da41c3c61270"><con:settings/><con:config><script>def project = context.testCase.testSuite.project;
+
+for (testSuite in project.testSuiteList) {
+log.info testSuite.name;
+}</script></con:config></con:testStep><con:properties><con:property><con:name>properties_testcase</con:name><con:value>properties_testcase_value</con:value></con:property></con:properties></con:testCase><con:testCase id="3e2176e1-29b8-4801-a3ec-cc6a39cb6b05" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestCase" searchProperties="true"><con:settings/><con:testStep type="groovy" name="GetProperties" id="9ae79e75-380d-4532-a215-abb6e83e511a"><con:settings/><con:config><script>
+//Test Case Level Properties:
+def testCaseName = testRunner.testCase.name;
+log.info ("Test Case Name :\n"+ testCaseName)
+def testCaseProperties = testRunner.testCase.getProperties();
+log.info ("Test Case Properties :\n"+ testCaseProperties)
+def testCasePropertiesName = testRunner.testCase.getPropertyNames();
+log.info ("Test Case Properties :\n"+ testRunner.testCase.getPropertyNames())
+</script></con:config></con:testStep><con:testStep type="groovy" name="TestCaseList" id="3b14f1ab-a1b2-4d5b-be2f-3ec40500ff56"><con:settings/><con:config><script>def suite = context.testCase.testSuite;
+
+for (testcase in suite.testCaseList) {
+log.info context.testCase.testSuite.name+"-"+testcase.name;
+}</script></con:config></con:testStep><con:properties><con:property><con:name>properties_testcase</con:name><con:value>properties_testcase_value</con:value></con:property></con:properties></con:testCase><con:testCase id="c5e5201a-f588-4845-ab73-48602c6ef260" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Project" searchProperties="true"><con:settings/><con:testStep type="groovy" name="GetProperties" id="50b77718-6797-44b9-9852-bda4a878a55e"><con:settings/><con:config><script>
+//Project Level Properties:
+testRunner.testCase.testSuite.project.setPropertyValue("hola", "PERRO")
+
+def project_name = testRunner.testCase.testSuite.project.name;
+log.info("testRunner.testCase.testSuite.project.name:"+project_name);
+def projectProperties = testRunner.testCase.testSuite.project.properties;
+log.info "Project Properties :\n$projectProperties";
+def projectPropertiesname = testRunner.testCase.testSuite.project.getPropertyNames();
+log.info "Project PropertiesName :\n$projectPropertiesname";
+def projectPropertyDescription = testRunner.testCase.testSuite.project.description;
+log.info "Project Properties description:\n$projectPropertyDescription";
+def projectPropertyCase = testRunner.testCase.testSuite.project.getTestSuites();
+log.info "Project Properties description:\n$projectPropertyCase";
+log.info "Project Properties description getClass:\n$projectPropertyCase";
+
+
+log.info ("[testRunner.testCase.testSuite.project.getPropertyNames()]:\n"+testRunner.testCase.testSuite.project.getPropertyNames());
+log.info ("[testRunner.testCase.testSuite.project.getPropertyValue('PERRO')]:\n"+testRunner.testCase.testSuite.project.getPropertyValue("PERRO"));
+log.info ("[testRunner.testCase.testSuite.project.getPropertyAt(0).value]:\n"+testRunner.testCase.testSuite.project.getPropertyAt(0).value);
+log.info ("[testRunner.testCase.testSuite.project.getPropertyAt(0).name]:\n"+testRunner.testCase.testSuite.project.getPropertyAt(0).name);
+log.info ("[testRunner.testCase.testSuite.project.getPropertyList()]:\n"+testRunner.testCase.testSuite.project.getPropertyList().toString());
+log.info ("[testRunner.testCase.testSuite.project.getProperty('hola').value]:\n"+testRunner.testCase.testSuite.project.getProperty("hola").value);
+log.info ("[testRunner.testCase.testSuite.project.getProperty('hola').name]:\n"+testRunner.testCase.testSuite.project.getProperty("hola").name);
+
+
+
+
+</script></con:config></con:testStep><con:testStep type="groovy" name="ProjectListAllType" id="0e3bff8a-377f-4cb5-961e-c63d7f86ffc4"><con:settings/><con:config><script>def project = context.testCase.testSuite.project;
+
+//TESTSUITE
+for (testsuite in project.testSuiteList) {
+//log.info context.testCase.testSuite.project.name+"-"+testsuite.name;
+	//TESTCASE
+	
+	for (testcase in testsuite.testCaseList) {
+	//log.info context.testCase.testSuite.project.name+"-"+testsuite.name+"-"+testcase.name;
+
+			for (teststep in testcase.testStepList) {
+			log.info context.testCase.testSuite.project.name+"-"+testsuite.name+"-"+testcase.name+"-"+teststep.name;
+			}
+
+	
+	}
+
+
+
+}</script></con:config></con:testStep><con:testStep type="groovy" name="ProjectPath" id="e4678daa-ae2c-4db3-b826-b31a49ece5a7"><con:settings/><con:config><script>// ref : http://webservice-testing.blogspot.com.es/2011/10/project-path-using-groovy-in-soapui.html
+def groovyUtils = new com.eviware.soapui.support.GroovyUtils(context)
+def projectDir = groovyUtils.projectPath
+log.info(projectDir)</script></con:config></con:testStep><con:properties><con:property><con:name>properties_testcase</con:name><con:value>properties_testcase_value</con:value></con:property></con:properties></con:testCase><con:testCase id="e5285159-31b7-4ec7-a273-f42840b5cbea" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestStep" searchProperties="true"><con:settings/><con:testStep type="groovy" name="GetProperties" id="6c847d1d-e7b3-4dd2-95a1-e247a95c9e0e"><con:settings/><con:config><script>
+
+//Test Step Level Properties:
+def actual_testStep = context.getCurrentStep().getLabel();
+log.info("context.getCurrentStep().getLabel():"+actual_testStep);
+log.info("context.getCurrentStep().getLabel():"+context.getCurrentStep().getLabel());
+log.info("context.getCurrentStep().getName():"+context.getCurrentStep().getName());
+log.info("context.getCurrentStep().getParent():"+context.getCurrentStep().getParent())
+log.info("context.getCurrentStep().getParent().name:"+context.getCurrentStep().getParent().name);
+log.info("context.getCurrentStep().getParent().properties:"+context.getCurrentStep().getParent().properties);
+log.info("context.getCurrentStep().getClass():"+context.getCurrentStep().getClass());
+log.info("context.getCurrentStep().getLogger():"+ context.getCurrentStep().getLogger());
+log.info("context.getCurrentStep().getLogger():"+ context.getCurrentStep().getLogger());
+log.info("context.getCurrentStep().getIcon():"+ context.getCurrentStep().getIcon());
+log.info("context.getCurrentStep().getId():"+ context.getCurrentStep().getId());
+log.info("context.getCurrentStep().config.type:"+ context.getCurrentStep().config.type);
+
+log.info  testRunner.testCase.getTestStepByName('1 - Request 1').getPropertyList().name;
+log.info  testRunner.testCase.getTestStepByName('1 - Request 1').getPropertyList().value;</script></con:config></con:testStep><con:testStep type="groovy" name="CurrentListTesStep" id="71c3b8e8-c111-42dd-9159-8e3dedad80a5"><con:settings/><con:config><script>// This will get the list of all testSteps in the testCase
+def testSteps = context.testCase.getTestStepList() 
+testSteps.each{
+// This block will loop through the test steps and print the test step name to the log
+	log.info(it.name);
+	
+}
+</script></con:config></con:testStep><con:testStep type="groovy" name="AllListTesStep" id="bf7cc12b-3e1d-4794-bc7a-63f97354b655"><con:settings/><con:config><script>
+def suite = context.testCase.testSuite;
+for (testcase in suite.testCaseList) {
+	def testSteps2 = testcase.getTestStepList() ;
+	testSteps2.each{
+	// This block will loop through the test steps and print the test step name to the log
+		log.info(testcase.name+" - "+it.name);
+		
+	}
+}
+</script></con:config></con:testStep><con:testStep type="restrequest" name="1 - Request 1" id="ac3d3adb-ee53-473f-9932-349a1359365d"><con:settings/><con:config service="https://jsonplaceholder.typicode.com" resourcePath="/posts/1" methodName="1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Copy of 1 - Request 1" id="b110db4f-8d53-4f00-a497-cd62ff6cdebc" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://jsonplaceholder.typicode.com</con:endpoint><con:request/><con:originalUri>https://jsonplaceholder.typicode.com/posts/1</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="RestTypePropertyStep" id="41717dfd-0461-4e72-8632-e4edc6cb12c2"><con:settings/><con:config><script>log.info  testRunner.testCase.getTestStepByName('1 - Request 1').config.type;
+log.info  testRunner.testCase.getTestStepByName('1 - Request 1').getPropertyList().name;
+log.info  testRunner.testCase.getTestStepByName('1 - Request 1').getPropertyList().value;
+
+log.info  "testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('Endpoint').value;"+testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('Endpoint').value;
+log.info  "testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('Username').value;"+testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('Username').value;
+log.info  "testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('Password').value;"+testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('Password').value;
+log.info  "testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('Domain').value;"+testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('Domain').value;
+log.info  "testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('Request').value;"+testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('Request').value;
+log.info  "testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('ResponseAsXml').value;"+testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('ResponseAsXml').value;
+log.info  "testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('Response').value;"+testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('Response').value;
+log.info  "testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('RawRequest').value;"+testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('RawRequest').value;
+
+</script></con:config></con:testStep><con:properties><con:property><con:name>properties_testcase</con:name><con:value>properties_testcase_value</con:value></con:property></con:properties></con:testCase><con:testCase id="c7f34540-0c78-4841-9857-a0e105cba0e0" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="UISupport" searchProperties="true"><con:settings/><con:testStep type="groovy" name="PopUp-ComboBox" id="ed9c6709-d904-4fd9-9f0d-0029163470f1"><con:settings/><con:config><script>import com.eviware.soapui.support.UISupport
+ testRunner.testCase.setPropertyValue("SIT","https://jsonplaceholder.typicode.com/posts/1")
+ testRunner.testCase.setPropertyValue("UAT","https://jsonplaceholder.typicode.com/posts/1")
+//Conditionally set endpointURL based on result
+def result = UISupport.prompt("Please select the enviornment", "Environment", ['SIT', 'UAT'])
+if (result=='SIT') 
+context["endpointURL"]=testRunner.testCase.getPropertyValue("SIT")
+else 
+context["endpointURL"]=testRunner.testCase.getPropertyValue("UAT")
+
+
+
+ testRunner.testCase.getTestStepByName('1 - Request 1').getHttpRequest().setEndpoint(context["endpointURL"])
+//Just to check, print it out
+log.info context["endpointURL"]
+log.info  testRunner.testCase.getTestStepByName('1 - Request 1').getPropertyList().name;
+log.info  testRunner.testCase.getTestStepByName('1 - Request 1').getPropertyList().value;</script></con:config></con:testStep><con:testStep type="restrequest" name="1 - Request 1" id="459160a7-930d-4ab8-b110-6f1114a4fdee"><con:settings/><con:config service="https://jsonplaceholder.typicode.com" resourcePath="/posts/1" methodName="1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="1 - Request 1" id="b110db4f-8d53-4f00-a497-cd62ff6cdebc" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://jsonplaceholder.typicode.com/posts/1</con:endpoint><con:request/><con:originalUri>https://jsonplaceholder.typicode.com/posts/1</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="Alert" id="c9a90f56-78a7-40bb-8f35-92ae9f37b702"><con:settings/><con:config><script>def alert = com.eviware.soapui.support.UISupport;
+
+//This will display an information message
+alert.showInfoMessage("Hello World !");
+
+//This will display an information message, but the dialog box title will be "soapUI Warning"
+alert.showInfoMessage("Hello World !","soapUI Warning !")
+
+//This will display an Error message
+alert.showErrorMessage("Hello World !")</script></con:config></con:testStep><con:properties><con:property><con:name>SIT</con:name><con:value>https://jsonplaceholder.typicode.com/posts/1</con:value></con:property><con:property><con:name>UAT</con:name><con:value>https://jsonplaceholder.typicode.com/posts/1</con:value></con:property></con:properties></con:testCase><con:properties><con:property><con:name>property_testsuite</con:name><con:value>property_testsuite_values</con:value></con:property></con:properties></con:testSuite><con:properties><con:property><con:name>hola</con:name><con:value>PERRO</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
