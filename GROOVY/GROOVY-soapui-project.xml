@@ -1,42 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<con:soapui-project id="9365b736-09d3-4eff-baea-2eaaeb86c378" activeEnvironment="Default" name="GROOVY" resourceRoot="" soapui-version="5.2.1" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:RestService" id="27ac794c-e866-4407-9c19-a65e83a49acd" wadlVersion="http://wadl.dev.java.net/2009/02" name="https://jsonplaceholder.typicode.com" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache/><con:endpoints><con:endpoint>https://jsonplaceholder.typicode.com</con:endpoint></con:endpoints><con:resource name="1" path="/posts/1" id="0fd30962-3a9b-42a6-ba21-99422cbc7716"><con:settings/><con:parameters/><con:method name="1" id="20525669-16da-4c27-8b5d-537ae18c8825" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:ns="https://jsonplaceholder.typicode.com/posts/1">ns:Response</con:element></con:representation><con:representation type="FAULT"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>404</con:status><con:params/><con:element>Fault</con:element></con:representation><con:request name="Request 1" id="b110db4f-8d53-4f00-a497-cd62ff6cdebc" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://jsonplaceholder.typicode.com</con:endpoint><con:request/><con:originalUri>https://jsonplaceholder.typicode.com/posts/1</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource></con:interface><con:testSuite id="da0fda9d-e0a7-4ee2-a9bd-fbc8409bd578" name="Groovy"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="521203e6-db00-4655-928f-e75e1b62bae6" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="File - CreateLoadPropeties" searchProperties="true"><con:settings/><con:testStep type="groovy" name="CreateFile" id="11074612-07a0-443d-b3d6-4f4eaada5dab"><con:settings/><con:config><script>//Create the properties object, and load it from the file system:
-//https://bowerstudios.com/node/1066
-Properties props = new Properties()
-File propsFile = new File('test.properties')
-Integer rand = new Random().next(4)
-props.setProperty('porcupine', rand.toString())
-props.store(propsFile.newWriter(), null)</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="20d8695b-2d3f-4138-84ae-ba7fe2757874" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="File - LoadFilePropeties" searchProperties="true"><con:settings/><con:testStep type="groovy" name="LoadFileProperty" id="1837859f-8973-4bac-bf45-1c2fbb9222f9"><con:settings/><con:config><script>Properties properties = new Properties()
-File propertiesFile = new File('test.properties')
-propertiesFile.withInputStream {
-    properties.load(it)
-}
-
-def runtimeString = 'porcupine'
-log.info(properties.getProperty('porcupine'))
-assert properties."$runtimeString" == properties.getProperty('porcupine')
-</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="d9c23d34-280d-4bd8-b8bf-5fe9c3aba176" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="File - DeleteFilePropeties" searchProperties="true"><con:settings/><con:testStep type="groovy" name="CreateFile" id="850430bf-52d1-4819-ac96-b3d58a140c83"><con:settings/><con:config><script>//Create the properties object, and load it from the file system:
-//https://bowerstudios.com/node/1066
-Properties props = new Properties()
-File propsFile = new File('test.properties')
-Integer rand = new Random().next(4)
-props.setProperty('deletethis', rand.toString())
-props.store(propsFile.newWriter(), null)
- sleep(2000);</script></con:config></con:testStep><con:testStep type="groovy" name="DeleteProperty" id="3b75620d-9116-47d8-8662-a7d82af707e3"><con:settings/><con:config><script>        try {
-            File myFile = new File("test.properties");
-            Properties properties = new Properties();
-            log.info("Load File");
-            properties.load(new FileInputStream(myFile));
-            log.info("Value deletethis:"+properties.getProperty("deletethis"));
-            properties.remove("deletethis");
-            OutputStream out = new FileOutputStream(myFile);
-            properties.store(out, null);
-            log.info("Value deletethis:"+properties.getProperty("deletethis"));
-             sleep(5000);
-        } catch (Exception e) {
-            log.info(e.printStackTrace());
-        }</script></con:config></con:testStep><con:testStep type="groovy" name="RemoveFile" id="94a22a54-3184-4eb3-ab0b-3f3d6f9dbafc"><con:settings/><con:config><script> File myFile = new File("test.properties");
- sleep(5000);
- assert myFile.delete();</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="c142c081-4258-47b3-b2d9-abe4e5e1d59b" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestSuite" searchProperties="true"><con:settings/><con:testStep type="groovy" name="GetProperties" id="dc3a73d1-c797-4b2d-a950-bc814d842b17"><con:settings/><con:config><script>
+<con:soapui-project id="9365b736-09d3-4eff-baea-2eaaeb86c378" activeEnvironment="Default" name="GROOVY" resourceRoot="" soapui-version="5.2.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:RestService" id="27ac794c-e866-4407-9c19-a65e83a49acd" wadlVersion="http://wadl.dev.java.net/2009/02" name="https://jsonplaceholder.typicode.com" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache/><con:endpoints><con:endpoint>https://jsonplaceholder.typicode.com</con:endpoint></con:endpoints><con:resource name="1" path="/posts/1" id="0fd30962-3a9b-42a6-ba21-99422cbc7716"><con:settings/><con:parameters/><con:method name="1" id="20525669-16da-4c27-8b5d-537ae18c8825" method="GET"><con:settings/><con:parameters/><con:representation type="RESPONSE"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>200</con:status><con:params/><con:element xmlns:ns="https://jsonplaceholder.typicode.com/posts/1">ns:Response</con:element></con:representation><con:representation type="FAULT"><con:mediaType>application/json; charset=utf-8</con:mediaType><con:status>404</con:status><con:params/><con:element>Fault</con:element></con:representation><con:request name="Request 1" id="b110db4f-8d53-4f00-a497-cd62ff6cdebc" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://jsonplaceholder.typicode.com</con:endpoint><con:request/><con:originalUri>https://jsonplaceholder.typicode.com/posts/1</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource></con:interface><con:testSuite id="da0fda9d-e0a7-4ee2-a9bd-fbc8409bd578" name="Soap Test"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="c142c081-4258-47b3-b2d9-abe4e5e1d59b" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="TestSuite" searchProperties="true"><con:settings/><con:testStep type="groovy" name="GetProperties" id="dc3a73d1-c797-4b2d-a950-bc814d842b17"><con:settings/><con:config><script>
 //Test Suite Level Properties:
 def name = testRunner.testCase.testSuite.name;
 log.info("testRunner.testCase.testSuite.name:"+name);
@@ -93,16 +56,20 @@ log.info ("[testRunner.testCase.testSuite.project.getProperty('hola').name]:\n"+
 
 
 </script></con:config></con:testStep><con:testStep type="groovy" name="ProjectListAllType" id="0e3bff8a-377f-4cb5-961e-c63d7f86ffc4"><con:settings/><con:config><script>def project = context.testCase.testSuite.project;
-
+log.info "#"+project.name
 //TESTSUITE
 for (testsuite in project.testSuiteList) {
 //log.info context.testCase.testSuite.project.name+"-"+testsuite.name;
+log.info "##"+testsuite.name;
 	//TESTCASE
 	
 	for (testcase in testsuite.testCaseList) {
 	//log.info context.testCase.testSuite.project.name+"-"+testsuite.name+"-"+testcase.name;
-
+	log.info "######"+testcase.name;
 			for (teststep in testcase.testStepList) {
+			//log.info context.testCase.testSuite.project.name+"-"+testsuite.name+"-"+testcase.name+"-"+teststep.name;
+			log.info "	"+teststep.name;
+
 			log.info context.testCase.testSuite.project.name+"-"+testsuite.name+"-"+testcase.name+"-"+teststep.name;
 			}
 
@@ -149,7 +116,7 @@ for (testcase in suite.testCaseList) {
 		
 	}
 }
-</script></con:config></con:testStep><con:testStep type="restrequest" name="1 - Request 1" id="ac3d3adb-ee53-473f-9932-349a1359365d"><con:settings/><con:config service="https://jsonplaceholder.typicode.com" resourcePath="/posts/1" methodName="1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="Copy of 1 - Request 1" id="b110db4f-8d53-4f00-a497-cd62ff6cdebc" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://jsonplaceholder.typicode.com</con:endpoint><con:request/><con:originalUri>https://jsonplaceholder.typicode.com/posts/1</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="RestTypePropertyStep" id="41717dfd-0461-4e72-8632-e4edc6cb12c2"><con:settings/><con:config><script>log.info  testRunner.testCase.getTestStepByName('1 - Request 1').config.type;
+</script></con:config></con:testStep><con:testStep type="restrequest" name="1 - Request 1" id="ac3d3adb-ee53-473f-9932-349a1359365d"><con:settings/><con:config service="https://jsonplaceholder.typicode.com" resourcePath="/posts/1" methodName="1" xsi:type="con:RestRequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:restRequest name="1 - Request 1" id="b110db4f-8d53-4f00-a497-cd62ff6cdebc" mediaType="application/json"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://jsonplaceholder.typicode.com</con:endpoint><con:request/><con:originalUri>https://jsonplaceholder.typicode.com/posts/1</con:originalUri><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:restRequest></con:config></con:testStep><con:testStep type="groovy" name="RestTypePropertyStep" id="41717dfd-0461-4e72-8632-e4edc6cb12c2"><con:settings/><con:config><script>log.info  testRunner.testCase.getTestStepByName('1 - Request 1').config.type;
 log.info  testRunner.testCase.getTestStepByName('1 - Request 1').getPropertyList().name;
 log.info  testRunner.testCase.getTestStepByName('1 - Request 1').getPropertyList().value;
 
@@ -162,7 +129,44 @@ log.info  "testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('R
 log.info  "testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('Response').value;"+testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('Response').value;
 log.info  "testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('RawRequest').value;"+testRunner.testCase.getTestStepByName('1 - Request 1').getProperty('RawRequest').value;
 
-</script></con:config></con:testStep><con:properties><con:property><con:name>properties_testcase</con:name><con:value>properties_testcase_value</con:value></con:property></con:properties></con:testCase><con:testCase id="c7f34540-0c78-4841-9857-a0e105cba0e0" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="UISupport" searchProperties="true"><con:settings/><con:testStep type="groovy" name="PopUp-ComboBox" id="ed9c6709-d904-4fd9-9f0d-0029163470f1"><con:settings/><con:config><script>import com.eviware.soapui.support.UISupport
+</script></con:config></con:testStep><con:properties><con:property><con:name>properties_testcase</con:name><con:value>properties_testcase_value</con:value></con:property></con:properties></con:testCase><con:properties><con:property><con:name>property_testsuite</con:name><con:value>property_testsuite_values</con:value></con:property></con:properties></con:testSuite><con:testSuite id="77b678ab-56c0-459f-bcf8-290a5a4af6ea" name="File"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="38cec6b3-5362-44a2-976f-a8f426c55b1a" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="File - CreateLoadPropeties" searchProperties="true"><con:settings/><con:testStep type="groovy" name="CreateFile" id="9ab1da4b-5721-4eec-83ed-343221aaf62e"><con:settings/><con:config><script>//Create the properties object, and load it from the file system:
+//https://bowerstudios.com/node/1066
+Properties props = new Properties()
+File propsFile = new File('test.properties')
+Integer rand = new Random().next(4)
+props.setProperty('porcupine', rand.toString())
+props.store(propsFile.newWriter(), null)</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="50092a98-ef93-4236-b1e3-c34021909ef5" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="File - LoadFilePropeties" searchProperties="true"><con:settings/><con:testStep type="groovy" name="LoadFileProperty" id="b68aefb5-d2d9-4170-a1cf-6377ad3b5560"><con:settings/><con:config><script>Properties properties = new Properties()
+File propertiesFile = new File('test.properties')
+propertiesFile.withInputStream {
+    properties.load(it)
+}
+
+def runtimeString = 'porcupine'
+log.info(properties.getProperty('porcupine'))
+assert properties."$runtimeString" == properties.getProperty('porcupine')
+</script></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="284ece71-fdeb-4d97-9685-84dd7417122f" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="File - DeleteFilePropeties" searchProperties="true"><con:settings/><con:testStep type="groovy" name="CreateFile" id="789b236f-6179-434d-ae73-dec9cf424844"><con:settings/><con:config><script>//Create the properties object, and load it from the file system:
+//https://bowerstudios.com/node/1066
+Properties props = new Properties()
+File propsFile = new File('test.properties')
+Integer rand = new Random().next(4)
+props.setProperty('deletethis', rand.toString())
+props.store(propsFile.newWriter(), null)
+ sleep(2000);</script></con:config></con:testStep><con:testStep type="groovy" name="DeleteProperty" id="beb91d27-38c7-43ad-967c-9f12a86fbb6d"><con:settings/><con:config><script>        try {
+            File myFile = new File("test.properties");
+            Properties properties = new Properties();
+            log.info("Load File");
+            properties.load(new FileInputStream(myFile));
+            log.info("Value deletethis:"+properties.getProperty("deletethis"));
+            properties.remove("deletethis");
+            OutputStream out = new FileOutputStream(myFile);
+            properties.store(out, null);
+            log.info("Value deletethis:"+properties.getProperty("deletethis"));
+             sleep(5000);
+        } catch (Exception e) {
+            log.info(e.printStackTrace());
+        }</script></con:config></con:testStep><con:testStep type="groovy" name="RemoveFile" id="63e0c1b2-c545-4d6b-b4ea-dd7e07c0c31a"><con:settings/><con:config><script> File myFile = new File("test.properties");
+ sleep(5000);
+ assert myFile.delete();</script></con:config></con:testStep><con:properties/></con:testCase><con:properties><con:property><con:name>property_testsuite</con:name><con:value>property_testsuite_values</con:value></con:property></con:properties></con:testSuite><con:testSuite id="0f26da8b-5079-4288-92ec-d66be893a283" name="UISupport"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="c7f34540-0c78-4841-9857-a0e105cba0e0" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="Windows" searchProperties="true"><con:settings/><con:testStep type="groovy" name="PopUp-ComboBox" id="ed9c6709-d904-4fd9-9f0d-0029163470f1"><con:settings/><con:config><script>import com.eviware.soapui.support.UISupport
  testRunner.testCase.setPropertyValue("SIT","https://jsonplaceholder.typicode.com/posts/1")
  testRunner.testCase.setPropertyValue("UAT","https://jsonplaceholder.typicode.com/posts/1")
 //Conditionally set endpointURL based on result
@@ -187,4 +191,4 @@ alert.showInfoMessage("Hello World !");
 alert.showInfoMessage("Hello World !","soapUI Warning !")
 
 //This will display an Error message
-alert.showErrorMessage("Hello World !")</script></con:config></con:testStep><con:properties><con:property><con:name>SIT</con:name><con:value>https://jsonplaceholder.typicode.com/posts/1</con:value></con:property><con:property><con:name>UAT</con:name><con:value>https://jsonplaceholder.typicode.com/posts/1</con:value></con:property></con:properties></con:testCase><con:properties><con:property><con:name>property_testsuite</con:name><con:value>property_testsuite_values</con:value></con:property></con:properties></con:testSuite><con:properties><con:property><con:name>hola</con:name><con:value>PERRO</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
+alert.showErrorMessage("Hello World !")</script></con:config></con:testStep><con:properties><con:property><con:name>SIT</con:name><con:value>https://jsonplaceholder.typicode.com/posts/1</con:value></con:property><con:property><con:name>UAT</con:name><con:value>https://jsonplaceholder.typicode.com/posts/1</con:value></con:property></con:properties></con:testCase><con:properties/></con:testSuite><con:properties><con:property><con:name>hola</con:name><con:value>PERRO</con:value></con:property></con:properties><con:wssContainer/><con:oAuth2ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
