@@ -16,6 +16,9 @@
 	AllListTesStep
 	1 - Request 1
 	RestTypePropertyStep
+######TestStep
+	TestStepRunGroovy
+	EnvironmentVariable
 ##File
 ######File - CreateLoadPropeties
 	CreateFile
