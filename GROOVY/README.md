@@ -17,10 +17,40 @@
 
 	
 	
-> - TestSuiteList
+> - TestSuiteList : print all testSuite Name
+> ```ruby
+>def project = context.testCase.testSuite.project;
+>
+>for (testSuite in project.testSuiteList) {
+>log.info testSuite.name;
+>}
+> ```
 ###### TestCase
 > - GetProperties
-> - TestCaseList
+> ```ruby
+>//Test Case Level Properties:
+>def testCaseName = testRunner.testCase.name;
+>log.info ("Test Case Name :\n"+ testCaseName)
+>def testCaseProperties = testRunner.testCase.getProperties();
+>log.info ("Test Case Properties :\n"+ testCaseProperties)
+>def testCasePropertiesName = testRunner.testCase.getPropertyNames();
+>log.info ("Test Case Properties :\n"+ testRunner.testCase.getPropertyNames())
+> ```
+> - TestCaseList : print all testCase Name
+> ```ruby
+>def suite = context.testCase.testSuite;
+>
+>for (testcase in suite.testCaseList) {
+>log.info context.testCase.testSuite.name+"-"+testcase.name;
+>}
+> ```
+>- SetProperty
+> ```ruby
+>  // Soap Test is TestSuiteName
+>  // TestCase is testCase Name
+>  // the _properties_testcase_ is the property testCsae created.
+>  testRunner.testCase.testSuite.project.getTestSuiteByName("Soap Test").getTestCaseByName("TestCase").setPropertyValue('properties_testcase',"properties_testcase_value_set");
+> ```
 ###### Project
 > - GetProperties
 > - ProjectListAllType
