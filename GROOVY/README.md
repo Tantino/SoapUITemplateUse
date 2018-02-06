@@ -49,10 +49,52 @@
 >  // Soap Test is TestSuiteName
 >  // TestCase is testCase Name
 >  // the _properties_testcase_ is the property testCsae created.
->  testRunner.testCase.testSuite.project.getTestSuiteByName("Soap Test").getTestCaseByName("TestCase").setPropertyValue('properties_testcase',"properties_testcase_value_set");
+>  testRunner.testCase.testSuite.project.getTestSuiteByName("Soap Test").
+>getTestCaseByName("TestCase").setPropertyValue('properties_testcase',"properties_testcase_value_set");
 > ```
 ###### Project
 > - GetProperties
+> ```ruby
+>//Project Level Properties:
+>testRunner.testCase.testSuite.project.setPropertyValue("hola", "PERRO")
+>
+>def project_name = testRunner.testCase.testSuite.project.name;
+>log.info("testRunner.testCase.testSuite.project.name:"+project_name);
+>def projectProperties = testRunner.testCase.testSuite.project.properties;
+>log.info "Project Properties :\n$projectProperties";
+>def projectPropertiesname = testRunner.testCase.testSuite.project.getPropertyNames();
+>log.info "Project PropertiesName :\n$projectPropertiesname";
+>def projectPropertyDescription = testRunner.testCase.testSuite.project.description;
+>log.info "Project Properties description:\n$projectPropertyDescription";
+>def projectPropertyCase = testRunner.testCase.testSuite.project.getTestSuites();
+>log.info "Project Properties description:\n$projectPropertyCase";
+>log.info "Project Properties description getClass:\n$projectPropertyCase";
+>
+>
+>log.info ("[testRunner.testCase.testSuite.project.getPropertyNames()]:\n"+
+>testRunner.testCase.testSuite.project.getPropertyNames());
+>log.info ("[testRunner.testCase.testSuite.project.getPropertyValue('PERRO')]:\n"+
+>testRunner.testCase.testSuite.project.getPropertyValue("PERRO"));
+>log.info ("[testRunner.testCase.testSuite.project.getPropertyAt(0).value]:\n"+
+>testRunner.testCase.testSuite.project.getPropertyAt(0).value);
+>log.info >("[testRunner.testCase.testSuite.project.getPropertyAt(0).name]:\n"+
+>testRunner.testCase.testSuite.project.getPropertyAt(0).name);
+>log.info ("[testRunner.testCase.testSuite.project.getPropertyList()]:\n"+
+>testRunner.testCase.testSuite.project.getPropertyList().toString());
+>log.info ("[testRunner.testCase.testSuite.project.getProperty('hola').value]:\n"+
+>testRunner.testCase.testSuite.project.getProperty("hola").value);
+>log.info ("[testRunner.testCase.testSuite.project.getProperty('hola').name]:\n"+
+>testRunner.testCase.testSuite.project.getProperty("hola").name);
+> ```
+
+
+
+
+
+GetProperties
+
+
+
 > - ProjectListAllType
 > - ProjectPath
 ###### TestStep
